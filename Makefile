@@ -1,10 +1,10 @@
-OUT_ZIP=DebianSidWSL2.zip
-LNCR_EXE=Debian.exe
+OUT_ZIP=RhinoLinuxWSL2.zip
+LNCR_EXE=Rhino.exe
 
 DLR=curl
 DLR_FLAGS=-L
-LNCR_ZIP_URL=https://github.com/yuk7/wsldl/releases/download/23072600/icons.zip
-LNCR_ZIP_EXE=Debian.exe
+LNCR_ZIP_URL=https://github.com/sileshn/wsldl/releases/download/20240419/icons.zip
+LNCR_ZIP_EXE=Rhino.exe
 
 all: $(OUT_ZIP)
 
@@ -45,9 +45,9 @@ rootfs: base.tar
 
 base.tar:
 	@echo -e '\e[1;31mExporting base.tar using docker...\e[m'
-	docker run --name debiansidwsl --net=host --platform linux/amd64 debian:sid /bin/bash -c "echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections; apt-get update; apt-get install -y -q apt-utils; apt-get full-upgrade -y -q; apt-get install -y -q apt-transport-https iproute2 aria2 bash-completion build-essential ca-certificates curl dialog figlet htop iputils-ping lolcat locales lsof nano pinentry-curses procps python3.10 software-properties-common sudo tree wget vim; sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen && locale-gen; sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'; sed -i '4,9d' /etc/profile; wget -O - https://pkg.wslutiliti.es/public.key | sudo tee -a /etc/apt/trusted.gpg.d/wslu.asc; echo 'deb https://pkg.wslutiliti.es/debian bullseye main' | sudo tee -a /etc/apt/sources.list; apt-get update && apt-get install -y -q wslu; apt-get autoremove -y; apt-get clean;"
-	docker export --output=base.tar debiansidwsl
-	docker rm -f debiansidwsl
+	docker run --name rhinolinuxwsl --net=host ghcr.io/rhino-linux/docker:latest /bin/bash -c "sudo apt-get update; sudo apt-get install -y -q apt-utils; sudo apt-get full-upgrade -y -q; sudo apt-get install -y -q apt-transport-https cron iproute2 aria2 bash-completion build-essential ca-certificates curl dialog figlet htop iputils-ping lolcat locales lsof nano pinentry-curses procps software-properties-common sudo tree wget vim; sudo apt-get autoremove -y; sudo apt-get clean; sudo deluser --remove-home ubuntu; sudo deluser --remove-home rhino"
+	docker export --output=base.tar rhinolinuxwsl
+	docker rm -f rhinolinuxwsl
 
 clean:
 	@echo -e '\e[1;31mCleaning files...\e[m'
@@ -58,4 +58,4 @@ clean:
 	-rm rootfs.tar.gz
 	-sudo rm -r rootfs
 	-rm base.tar
-	-docker rmi -f debian:sid
+	-docker rmi -f ghcr.io/rhino-linux/docker:latest

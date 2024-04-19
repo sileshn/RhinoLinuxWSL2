@@ -1,19 +1,19 @@
 # Disclaimer
 
-This project is in no way related to or created by the official Debian team or its members. It is solely a project of mine.
+This project is in no way related to or created by the official Rhino team or its members. It is solely a project of mine.
 
-# DebianSidWSL2
-Debian Sid on WSL2 (Windows 10 FCU or later) based on [wsldl](https://github.com/yuk7/wsldl).
+# RhinoLinuxWSL2
+Rhino Linux on WSL2 (Windows 10 FCU or later) based on [wsldl](https://github.com/yuk7/wsldl).
 
-[![Screenshot-2023-03-11-125701.png](https://i.postimg.cc/gJnMyrw3/Screenshot-2023-03-11-125701.png)](https://postimg.cc/CBpHShsK)
-[![Github All Releases](https://img.shields.io/github/downloads/sileshn/DebianSidWSL2/total.svg?style=flat-square)](https://github.com/sileshn/DebianSidWSL2/releases)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![License](https://img.shields.io/github/license/sileshn/DebianSidWSL2.svg?style=flat-square)](https://github.com/sileshn/DebianSidWSL2/blob/main/LICENSE)
+[![Screenshot-2024-04-19-092719.png](https://i.postimg.cc/76QXNF1x/Screenshot-2024-04-19-092719.png)](https://postimg.cc/YGY1ryyV)
+[![Github All Releases](https://img.shields.io/github/downloads/sileshn/RhinoLinuxWSL2/total.svg?style=flat-square)](https://github.com/sileshn/RhinoLinuxWSL2/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![License](https://img.shields.io/github/license/sileshn/RhinoLinuxWSL2.svg?style=flat-square)](https://github.com/sileshn/RhinoLinuxWSL2/blob/main/LICENSE)
 
 ## Features and important information
 * Increase virtual disk size from the default 256GB
 * Create a new user and set the user as default
-* DebianSidWSL2 Supports systemd natively if you are running wsl v0.67.6 (more details [here](https://devblogs.microsoft.com/commandline/systemd-support-is-now-available-in-wsl/)) and above. For earlier versions of wsl, systemd is supported using diddledani's [one-script-wsl2-systemd](https://github.com/diddledani/one-script-wsl2-systemd). This is done automatically during initial setup.
-* DebianSidWSL2 includes a wsl.conf file which only has section headers. Users can use this to configure the distro to their liking. You can read more about wsl.conf and its configuration settings [here](https://docs.microsoft.com/en-us/windows/wsl/wsl-config).
+* RhinoLinuxWSL2 Supports systemd natively if you are running wsl v0.67.6 (more details [here](https://devblogs.microsoft.com/commandline/systemd-support-is-now-available-in-wsl/)) and above. For earlier versions of wsl, systemd is supported using diddledani's [one-script-wsl2-systemd](https://github.com/diddledani/one-script-wsl2-systemd). This is done automatically during initial setup.
+* RhinoLinuxWSL2 includes a wsl.conf file which only has section headers. Users can use this to configure the distro to their liking. You can read more about wsl.conf and its configuration settings [here](https://docs.microsoft.com/en-us/windows/wsl/wsl-config).
 
 ## Requirements
 * For x64 systems: Version 1903 or higher, with Build 18362 or higher.
@@ -36,13 +36,13 @@ Debian Sid on WSL2 (Windows 10 FCU or later) based on [wsldl](https://github.com
 
 ## Install
 * Make sure all the steps mentioned under "Requirements" are completed.
-* [Download](https://github.com/sileshn/DebianSidWSL2/releases/latest) installer zip
+* [Download](https://github.com/sileshn/RhinoLinuxWSL2/releases/latest) installer zip
 * Extract all files in zip file to same directory
 * Set version 2 as default. Note that this step is required only for manual installation.
   ```dos
   wsl --set-default-version 2
   ```
-* Run Debian.exe to extract rootfs and register to WSL
+* Run Rhino.exe to extract rootfs and register to WSL
 
 **Note:**
 Exe filename is using the instance name to register. If you rename it you can register with a diffrent name and have multiple installs.
@@ -122,7 +122,7 @@ Usage :
 
 ## How to setup
 
-DebianSidWSL2 will ask you to create a new user during its first run. If you chose to create a new user during initial setup, the steps below are not required unless you want to create additional users.
+RhinoLinuxWSL2 will ask you to create a new user during its first run. If you chose to create a new user during initial setup, the steps below are not required unless you want to create additional users.
 ```dos
 passwd
 useradd -m -g users -G sudo -s /bin/bash <username>
@@ -133,7 +133,7 @@ exit
 
 You can set the user you created as default user using 2 methods.
 
-Open Debian.exe, run the following command (replace username with the actual username you created).
+Open Rhino.exe, run the following command (replace username with the actual username you created).
 ```dos
 sed -i '/\[user\]/a default = username' /etc/wsl.conf
 ```
@@ -142,47 +142,47 @@ Shutdown and restart the distro (this step is important).
 
 (or)
 
-Execute the command below in a windows cmd terminal from the directory where Debian.exe is installed.
+Execute the command below in a windows cmd terminal from the directory where Rhino.exe is installed.
 ```dos
->Debian.exe config --default-user <username>
+>Rhino.exe config --default-user <username>
 ```
 
 ## How to uninstall instance
 ```dos
->Debian.exe clean
+>Rhino.exe clean
 
 ```
 
 ## How to backup instance
 export to backup.tar.gz
 ```cmd
->Debian.exe backup --tgz
+>Rhino.exe backup --tgz
 ```
 export to backup.ext4.vhdx.gz
 ```cmd
->Debian.exe backup --vhdxgz
+>Rhino.exe backup --vhdxgz
 ```
 
 ## How to restore instance
 
 There are 2 ways to do it. 
 
-Rename the backup to rootfs.tar.gz and run Debian.exe
+Rename the backup to rootfs.tar.gz and run Rhino.exe
 
 (or)
 
 .tar(.gz)
 ```cmd
->Debian.exe install backup.tar.gz
+>Rhino.exe install backup.tar.gz
 ```
 .ext4.vhdx(.gz)
 ```cmd
->Debian.exe install backup.ext4.vhdx.gz
+>Rhino.exe install backup.ext4.vhdx.gz
 ```
 
 You may need to run the command below in some circumstances.
 ```cmd
->Debian.exe --default-uid 1000
+>Rhino.exe --default-uid 1000
 ```
 
 ## How to build
@@ -192,18 +192,18 @@ You may need to run the command below in some circumstances.
 Docker, tar, zip, unzip, bsdtar need to be installed.
 
 ```dos
-git clone git@gitlab.com:sileshn/DebianSidWSL2.git
-cd DebianSidWSL2
+git clone git@gitlab.com:sileshn/RhinoLinuxWSL2.git
+cd RhinoLinuxWSL2
 make
 
 ```
-Copy the DebianSidWSL2.zip file to a safe location and run the command below to clean.
+Copy the RhinoLinuxWSL2.zip file to a safe location and run the command below to clean.
 ```dos
 make clean
 
 ```
 
-## How to run docker in DebianSidWSL2 without using docker desktop.
+## How to run docker in RhinoLinuxWSL2 without using docker desktop.
 
 Delete older versions of docker if installed.
 ```dos
