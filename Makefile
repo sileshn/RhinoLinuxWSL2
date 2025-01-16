@@ -46,7 +46,7 @@ rootfs: base.tar
 
 base.tar:
 	@echo -e '\e[1;31mExporting base.tar using docker...\e[m'
-	docker run --name rhinolinuxwsl --net=host ghcr.io/rhino-linux/docker:latest /bin/bash -c "sudo apt-get update; sudo apt-get install -y -q apt-utils; sudo apt-get full-upgrade -y -q; sudo apt-get install -y -q apt-transport-https cron iproute2 aria2 bash-completion build-essential ca-certificates curl dialog figlet htop iputils-ping lolcat locales lsof nano pinentry-curses procps software-properties-common sudo tree wget vim; sudo apt-get autoremove -y; sudo apt-get clean; sudo deluser --remove-home ubuntu; sudo deluser --remove-home rhino"
+	docker run --name rhinolinuxwsl --net=host ghcr.io/rhino-linux/docker:latest /bin/bash -c "sudo apt-get update; sudo apt-get install -y -q apt-utils; sudo apt-get full-upgrade -y -q; sudo apt-get install -y -q apt-transport-https cron iproute2 aria2 bash-completion build-essential ca-certificates curl dialog figlet htop iputils-ping lolcat locales lsof nano openssh-client pinentry-curses procps software-properties-common sudo tree wget vim; sudo apt-get autoremove -y; sudo apt-get clean; sudo deluser --remove-home ubuntu; sudo deluser --remove-home rhino"
 	docker export --output=base.tar rhinolinuxwsl
 	docker rm -f rhinolinuxwsl
 
